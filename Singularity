@@ -1,6 +1,10 @@
 BootStrap: library
 From: ubuntu:20.04
 
+%labels
+MAINTAINER ddecap
+NAME Halvade
+
 %environment
   PATH=/usr/local/halvade:/usr/local/spark/bin:/usr/local/spark/sbin:$PATH
 
@@ -62,22 +66,20 @@ From: ubuntu:20.04
   cd ../
   rm samtools-${SAMTOOLS_V}.tar.bz2
   rm -r samtools-${SAMTOOLS_V}
-  
+
   # bwa
   BWA_V=0.7.16a
   wget https://github.com/lh3/bwa/releases/download/v0.7.16/bwa-${BWA_V}.tar.bz2
   tar -vxjf bwa-${BWA_V}.tar.bz2
   cd bwa-${BWA_V}
   make
-  cp bwa /usr/local/halvade/ 
+  cp bwa /usr/local/halvade/
   cd ../
   rm bwa-${BWA_V}.tar.bz2
   rm -r bwa-${BWA_V}
 
-  # add gatk 
+  # add gatk
   GATK_V=4.1.2.0
   wget https://github.com/broadinstitute/gatk/releases/download/${GATK_V}/gatk-${GATK_V}.zip
   unzip -j gatk-${GATK_V}.zip gatk-${GATK_V}/gatk-package-${GATK_V}-local.jar -d "/usr/local/halvade/"
   rm gatk-${GATK_V}.zip
-  
-  
