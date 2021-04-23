@@ -2,7 +2,7 @@
 
 ```bash
 singularity instance start \
-  --bind $(mktemp -d run/meerkat_XXXX):/run \
+  --bind $(mktemp -d run/hostname_XXXX):/run \
   --bind dropbear/:/etc/dropbear \
   --bind log/:/usr/local/spark/logs \
   --bind work/:/usr/local/spark/work \
@@ -11,18 +11,11 @@ singularity instance start \
   # start spark inside the started image
   singularity exec instance://halvade-single /usr/local/spark/sbin/start-all.sh
 
-  # if pwless ssh doesn't work, you can specify the used key:
-  # shell inside the started image
-  singularity shell instance://halvade-single
-  # set the SPARK_SSH_OPTS inside the shell
-  SPARK_SSH_OPTS="$SPARK_SSH_OPTS -i /home/ddecap/.ssh/pwless_rsa"
-  /usr/local/spark/sbin/start-all.sh
-  exit; # get out of the shell
-
-  # different solution -> bashrc file is sourced in the same directory for environment!
-
+  # if pwless ssh doesn't work, you can specify the used key in the `bashrc` file in the same directory as your halvade.sif file by adding this line:
+  SPARK_SSH_OPTS="$SPARK_SSH_OPTS -i /home/username/.ssh/pwless_rsa"
 
 ```
+
 # extra variables to use in script:
 ```bash
 HALVADE_HOME
@@ -34,7 +27,7 @@ HADOOP_SSH_OPTS
 ```
 
 
-#Install locally without the singularity image:
+# Install locally without the singularity image:
 
 ## start Spark without YARN
 ```bash
